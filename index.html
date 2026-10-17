@@ -2,31 +2,48 @@
 <html lang="ru">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Держи прод — оборона датацентра</title>
-<meta name="description" content="Tower defense про оборону датацентра: дроны, ракеты и диверсанты летят на прод. Расставляйте защиту, двигайте её прямо в бою и держите SLA.">
-<style>
-body{max-width:720px;margin:40px auto;padding:0 16px;font:16px/1.6 system-ui,sans-serif;color:#151515;background:#f5f5f2}
-h1{font-size:36px;line-height:1.1;margin-bottom:8px}h2{font-size:20px;margin-top:36px}
-.play{display:inline-block;margin:20px 0 8px;padding:14px 28px;border-radius:999px;background:#151515;color:#fff;font-weight:700;text-decoration:none}
-.play::before{content:"";display:inline-block;width:10px;height:10px;margin-right:10px;border-radius:50%;background:#e8552d}
-.muted{color:#6b6b66}
-</style>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Держи прод</title>
+  <script type="module" crossorigin src="./assets/index-BJJXeFqu.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-BLTQcoVG.css">
 </head>
 <body>
-<h1>Держи прод</h1>
-<p>Tower defense с юмором про айтишные собеседования. На прод летят дроны, ракеты и идут диверсанты. Расставляйте защиту, двигайте её прямо в бою и держите SLA.</p>
-<a class="play" href="play/">Играть в браузере</a>
-<p class="muted">Скоро в RuStore и App Store.</p>
+<div id="app">
+  <header class="top">
+    <h1 class="brand">Собеседование в&nbsp;бигтех&nbsp;2026 <span>be&nbsp;like</span></h1>
+    <div class="hud">
+      <div class="stat"><span class="k">Бюджет</span><span class="v" id="hMoney">0 ₽</span></div>
+      <button class="funds" id="bFunds" hidden aria-label="Экстренное финансирование за рекламу"><b id="bFundsAmt">+0 ₽</b><small>▶ за рекламу</small></button>
+      <div class="stat"><span class="k">Волна</span><span class="v" id="hWave">0</span></div>
+      <div class="stat" id="slaBox"><span class="k">SLA</span><span class="v" id="hSla">100%</span></div>
+      <div class="stat"><span class="k">Сбито</span><span class="v" id="hKills">0</span></div>
+      <div class="ctrl">
+        <button class="ibtn" id="bPause" aria-label="Пауза" title="Пауза (P)"><svg viewBox="0 0 16 16"><rect x="3" y="2" width="3.5" height="12" rx="1" fill="currentColor"/><rect x="9.5" y="2" width="3.5" height="12" rx="1" fill="currentColor"/></svg></button>
+        <button class="ibtn" id="bSpeed" aria-label="Скорость" title="Скорость (F)">×1</button>
+        <button class="ibtn" id="bSound" aria-label="Звук" title="Звук (M)"><svg viewBox="0 0 16 16"><path d="M2 6h3l4-3v10l-4-3H2z" fill="currentColor"/><path id="sndWave" d="M11 5.5c1 .7 1.5 1.6 1.5 2.5s-.5 1.8-1.5 2.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg></button>
+      </div>
+      <button class="go" id="bWave"><span class="go-txt"><span class="go-t" id="bWaveT">Начать волну 1</span><span class="go-s" id="bWaveS"></span></span></button>
+    </div>
+  </header>
 
-<h2>Частые вопросы</h2>
-<p><b>Нужен ли интернет?</b><br>В приложениях нет, игра полностью работает офлайн.</p>
-<p><b>Как переставить юнит?</b><br>Перетащите его на новое место. Там он несколько секунд разворачивается и не стреляет, это видно по кольцу над ним.</p>
-<p><b>Как открыть бесконечный режим?</b><br>Пройдите три уровня карты «Равнина» в кампании.</p>
-<p><b>Пропал прогресс.</b><br>Прогресс хранится только на устройстве и удаляется вместе с игрой или данными браузера.</p>
-
-<h2>Связаться</h2>
-<p>Ошибки и предложения: <a href="mailto:mr.limelab@gmail.com">mr.limelab@gmail.com</a></p>
-<p><a href="privacy.html">Политика конфиденциальности</a></p>
+  <main class="stage" id="stage">
+    <canvas id="cv"></canvas>
+    <aside class="tools" id="tools" aria-label="Средства защиты">
+      <button class="deco active" data-deco="pointer" aria-label="Выбор"><svg viewBox="0 0 20 20"><path d="M5 2.5v14l3.6-3.4 2.4 5 2.2-1-2.4-5H16z" fill="currentColor"/></svg></button>
+      <button class="deco" data-deco="rect" aria-label="Прямоугольник"><svg viewBox="0 0 20 20"><rect x="3.5" y="3.5" width="13" height="13" rx="2" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+      <button class="deco" data-deco="circle" aria-label="Круг"><svg viewBox="0 0 20 20"><circle cx="10" cy="10" r="6.8" fill="none" stroke="currentColor" stroke-width="1.7"/></svg></button>
+      <button class="deco" data-deco="arrow" aria-label="Стрелка"><svg viewBox="0 0 20 20"><path d="M4 16 16 4M8 4h8v8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"/></svg></button>
+      <button class="deco" data-deco="text" aria-label="Текст"><svg viewBox="0 0 20 20"><path d="M5 4h10M10 4v12M7.5 16h5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></svg></button>
+      <div class="sep"></div>
+    </aside>
+    <div class="coach" id="coach" hidden></div>
+    <button class="zoom-reset" id="zoomReset" hidden aria-label="Показать всю доску" title="Показать всю доску (0)"><svg viewBox="0 0 20 20"><path d="M3 8V3h5M17 8V3h-5M3 12v5h5M17 12v5h-5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg></button>
+    <div class="toasts" id="toasts"></div>
+    <div class="pop" id="pop" hidden></div>
+    <div class="tip" id="tip" hidden></div>
+    <div class="overlay" id="overlay"></div>
+  </main>
+</div>
+<div class="ctag" id="ctag" hidden><svg viewBox="0 0 20 20"><path d="M3 2v14l3.8-3.6 2.6 5.4 2.3-1.1-2.6-5.3H15z" fill="#3fb883" stroke="#ffffff" stroke-width="1.2"/></svg><span id="ctagText">Кандидат</span></div>
 </body>
 </html>
